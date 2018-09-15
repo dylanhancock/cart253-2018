@@ -8,27 +8,31 @@
 
 
 // The image of a clown face
-//Changed to devil face
-var devilImage;
+var clownImage;
 // The current position of the clown face
-var devilImageX;
-var devilImageY;
+var clownImageX;
+var clownImageY;
 
 // The transparent image of "felt" that wipes down the canvas
 var feltTextureImage;
 // The current position of the transparent image of "felt"
 var feltTextureImageX;
 var feltTextureImageY;
-
+//Adding Angel Code
+var angelImage;
+//Where Angel Code is
+var angelImageX;
+var angelImageY;
 
 // preload()
 //
-// Load the two images we're using before the program starts
-// Changed the image from clown to devil
-
+// Load the three images we're using before the program starts
+//added angel image
 function preload() {
-  devilImage = loadImage("assets/images/Smiling_Devil_Emoji_large.png");
+  clownImage = loadImage("assets/images/clown.png");
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
+  angelImage = loadImage("assets/images/angel.png");
+
 }
 
 
@@ -41,12 +45,16 @@ function setup() {
   createCanvas(640,640);
 
   // Start the clown image at the centre of the canvas
-  devilImageX = width/2;
-  devilImageY = height/2;
+  clownImageX = width/2;
+  clownImageY = height/2;
 
   // Start the felt image perfectly off screen above the canvas
   feltTextureImageX = width/2;
   feltTextureImageY = 0 - feltTextureImage.height/2;
+//start angel all the way off canvas to left
+  angelImageX = 0 - angelImage.width/2;
+  angelImageY = height/2;
+
 
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
@@ -62,22 +70,22 @@ function draw() {
 
   // Move the felt image down by increasing its y position
   feltTextureImageY += 1;
+  angelImageX += 1;
+//display angel image
+  image(angelImage,angelImageX,angelImageY);
 
   // Display the felt image
   image(feltTextureImage,feltTextureImageX,feltTextureImageY);
 
-
   // Move the clown by moving it 1/10th of its current distance from the mouse
 
   // Calculate the distance in X and in Y
-  var xDistance = mouseX - devilImageX;
-  var yDistance = mouseY - devilImageY;
+  var xDistance = mouseX - clownImageX;
+  var yDistance = mouseY - clownImageY;
   // Add 1/10th of the x and y distance to the clown's current (x,y) location
-  devilImageX = devilImageX + xDistance/10;
-  devilImageY = devilImageY + yDistance/10;
+  clownImageX = clownImageX + xDistance/10;
+  clownImageY = clownImageY + yDistance/10;
 
   // Display the clown image
-  image(devilImage,devilImageX,devilImageY);
-
-
+  image(clownImage,clownImageX,clownImageY);
 }
