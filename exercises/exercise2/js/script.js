@@ -130,6 +130,7 @@ function draw() {
   if (enemyX > width) {
     // This means the player dodged so update its dodge statistic
     dodges = dodges + 1;
+
     // Tell them how many dodges they have made
     console.log(dodges + " DODGES!");
     // Reset the enemy's position to the left at a random height
@@ -142,6 +143,14 @@ function draw() {
 
   // Display the current number of successful in the console
   console.log(dodges);
+
+//display dodges in text
+  text(dodges, 16, 16, 20, 20);
+
+  console.log(mouseX,mouseY);
+
+
+
 
   // The player is black
   fill(0);
