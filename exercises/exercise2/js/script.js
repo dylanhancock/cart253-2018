@@ -17,6 +17,16 @@ var avatarSpeed = 10;
 var avatarVX = 0;
 var avatarVY = 0;
 
+//the shadow of the avatar
+var avatarShadowX;
+var avatarShadowY;
+var avatarShadowsize = 50;
+
+// The speed and velocity of our avatar circle
+var avatarShadowspeed = 10;
+var avatarShadowVX = 0;
+var avatarShadowVY = 0;
+
 // The position and size of the enemy circle
 var enemyX;
 var enemyY;
@@ -59,7 +69,7 @@ function setup() {
 // game over situations.
 function draw() {
   // A pink background
-  background(255,220,220);
+  background(0,255,20,);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -67,27 +77,45 @@ function draw() {
 
   // Check which keys are down and set the avatar's velocity based on its
   // speed appropriately
+  //added a shadow which corresponds to an if statement
 
   // Left and right
+  //added shadow at a 100 transperancy to give motion effect
   if (keyIsDown(LEFT_ARROW)) {
     avatarVX = -avatarSpeed;
+    fill(255,0,0,100);
+    ellipse(avatarX + 10,avatarY, avatarShadowsize, avatarShadowsize);
   }
   else if (keyIsDown(RIGHT_ARROW)) {
     avatarVX = avatarSpeed;
+    fill(255,0,0,100);
+    ellipse(avatarX - 10,avatarY, avatarShadowsize, avatarShadowsize);
   }
 
   // Up and down (separate if-statements so you can move vertically and
   // horizontally at the same time)
+
+  //added transperancy shadow to y axis
+
   if (keyIsDown(UP_ARROW)) {
     avatarVY = -avatarSpeed;
+
+    fill(255,0,0,100);
+    ellipse(avatarX,avatarY + 10, avatarShadowsize, avatarShadowsize);
+
   }
   else if (keyIsDown(DOWN_ARROW)) {
     avatarVY = avatarSpeed;
+    fill(255,0,0,100);
+    ellipse(avatarX,avatarY - 10, avatarShadowsize, avatarShadowsize);
   }
 
   // Move the avatar according to its calculated velocity
   avatarX = avatarX + avatarVX;
   avatarY = avatarY + avatarVY;
+
+  avatarShadowX = avatarShadowX + avatarShadowVX;
+  avatarShadowY = avatarShadowY + avatarShadowVY;
 
   // The enemy always moves at enemySpeed (which increases)
   enemyVX = enemySpeed;
@@ -145,7 +173,9 @@ function draw() {
   console.log(dodges);
 
 //display dodges in text
-  text(dodges, 16, 16, 20, 20);
+
+  text(dodges, 20, 20, 30, 30);
+  textSize(30);
 
   console.log(mouseX,mouseY);
 
@@ -153,12 +183,16 @@ function draw() {
 
 
   // The player is black
-  fill(0);
+  //change to red
+  fill(255,0,0);
   // Draw the player as a circle
   ellipse(avatarX,avatarY,avatarSize,avatarSize);
 
+
+
+
   // The enemy is red
-  fill(255,0,0);
+  fill(0,33,230);
   // Draw the enemy as a circle
   ellipse(enemyX,enemyY,enemySize,enemySize);
 
