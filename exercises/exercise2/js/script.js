@@ -44,6 +44,20 @@ var enemySpeedIncrease = 0.5;
 // How many dodges the player has made
 var dodges = 0;
 
+var robber;
+var robberShadow;
+var police;
+var background;
+//added robber, robber shadow, police and sky
+function preload() {
+  robber = loadImage("assets/images/robber.png");
+  robberShadow = loadImage("assets/images/robbershadow.png");
+  police = loadImage("assets/images/police.png");
+  sky = loadImage("assets/images/cartoonsky.png");
+
+}
+
+
 // setup()
 //
 // Make the canvas, position the avatar and anemy
@@ -59,6 +73,7 @@ function setup() {
   enemyX = 0;
   enemyY = random(0,height);
 
+
   // No stroke so it looks cleaner
   noStroke();
 }
@@ -68,8 +83,9 @@ function setup() {
 // Handle moving the avatar and enemy and checking for dodges and
 // game over situations.
 function draw() {
-  // A pink background
-  background(0,255,20,);
+
+//change background to pretty sky
+background(sky);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -80,16 +96,14 @@ function draw() {
   //added a shadow which corresponds to an if statement
 
   // Left and right
-  //added shadow at a 100 transperancy to give motion effect
+  //added shadow which appears in if statement
   if (keyIsDown(LEFT_ARROW)) {
     avatarVX = -avatarSpeed;
-    fill(255,0,0,100);
-    ellipse(avatarX + 10,avatarY, avatarShadowsize, avatarShadowsize);
+    image(robberShadow,avatarX + 20,avatarY);
   }
   else if (keyIsDown(RIGHT_ARROW)) {
     avatarVX = avatarSpeed;
-    fill(255,0,0,100);
-    ellipse(avatarX - 10,avatarY, avatarShadowsize, avatarShadowsize);
+    image(robberShadow,avatarX - 20,avatarY);
   }
 
   // Up and down (separate if-statements so you can move vertically and
@@ -100,14 +114,12 @@ function draw() {
   if (keyIsDown(UP_ARROW)) {
     avatarVY = -avatarSpeed;
 
-    fill(255,0,0,100);
-    ellipse(avatarX,avatarY + 10, avatarShadowsize, avatarShadowsize);
+    image(robberShadow,avatarX,avatarY + 20);
 
   }
   else if (keyIsDown(DOWN_ARROW)) {
     avatarVY = avatarSpeed;
-    fill(255,0,0,100);
-    ellipse(avatarX,avatarY - 10, avatarShadowsize, avatarShadowsize);
+    image(robberShadow,avatarX,avatarY-20);
   }
 
   // Move the avatar according to its calculated velocity
@@ -182,18 +194,14 @@ function draw() {
 
 
 
-  // The player is black
-  //change to red
-  fill(255,0,0);
-  // Draw the player as a circle
-  ellipse(avatarX,avatarY,avatarSize,avatarSize);
-
+//change player to the robber
+  image(robber,avatarX,avatarY);
 
 
 
   // The enemy is red
-  fill(0,33,230);
-  // Draw the enemy as a circle
-  ellipse(enemyX,enemyY,enemySize,enemySize);
+
+  // draw enemy as police
+  image(police,enemyX,enemyY);
 
 }
