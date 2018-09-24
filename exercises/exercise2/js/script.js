@@ -48,12 +48,14 @@ var robber;
 var robberShadow;
 var police;
 var background;
-//added robber, robber shadow, police and sky
+var jailBars;
+//added robber, robber shadow, police,sky and red robber
 function preload() {
   robber = loadImage("assets/images/robber.png");
   robberShadow = loadImage("assets/images/robbershadow.png");
   police = loadImage("assets/images/police.png");
   sky = loadImage("assets/images/cartoonsky.png");
+  robberRed = loadImage("assets/images/robberred.png");
 
 }
 
@@ -151,6 +153,8 @@ background(sky);
     avatarY = height/2;
     // Reset the dodge counter
     dodges = 0;
+//red robber in collision
+    image(robberRed, avatarX, avatarY);
   }
 
   // Check if the avatar has gone off the screen (cheating!)
@@ -164,6 +168,8 @@ background(sky);
     avatarX = width/2;
     avatarY = height/2;
     dodges = 0;
+//make avatar turn red upon collision
+    image(robberRed, avatarX, avatarY);
   }
 
   // Check if the enemy has moved all the way across the screen
@@ -179,6 +185,12 @@ background(sky);
     // Increase the enemy's speed and size to make the game harder
     enemySpeed = enemySpeed + enemySpeedIncrease;
     enemySize = enemySize + enemySizeIncrease;
+
+    avatarSpeed = random(0,5);
+    console.log(avatarSpeed);
+    avatarSize = random(0,10);
+
+    background(sky);
   }
 
   // Display the current number of successful in the console
@@ -189,7 +201,7 @@ background(sky);
   text(dodges, 20, 20, 30, 30);
   textSize(30);
 
-  console.log(mouseX,mouseY);
+
 
 
 
