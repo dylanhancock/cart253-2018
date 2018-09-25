@@ -49,6 +49,9 @@ var robberShadow;
 var police;
 var background;
 var jailBars;
+
+var currentRobber;
+
 //added robber, robber shadow, police,sky and red robber
 function preload() {
   robber = loadImage("assets/images/robber.png");
@@ -75,6 +78,8 @@ function setup() {
   enemyX = 0;
   enemyY = random(0,height);
 
+  currentRobber = robber;
+
 
   // No stroke so it looks cleaner
   noStroke();
@@ -85,6 +90,9 @@ function setup() {
 // Handle moving the avatar and enemy and checking for dodges and
 // game over situations.
 function draw() {
+
+//make the standard robber the original image
+currentRobber = robber;
 
 //change background to pretty sky
 background(sky);
@@ -101,11 +109,11 @@ background(sky);
   //added shadow which appears in if statement
   if (keyIsDown(LEFT_ARROW)) {
     avatarVX = -avatarSpeed;
-    image(robberShadow,avatarX + 20,avatarY);
+    image(robberShadow,avatarX + 10,avatarY, avatarSize, avatarSize);
   }
   else if (keyIsDown(RIGHT_ARROW)) {
     avatarVX = avatarSpeed;
-    image(robberShadow,avatarX - 20,avatarY);
+    image(robberShadow,avatarX - 10,avatarY, avatarSize, avatarSize);
   }
 
   // Up and down (separate if-statements so you can move vertically and
@@ -116,12 +124,12 @@ background(sky);
   if (keyIsDown(UP_ARROW)) {
     avatarVY = -avatarSpeed;
 
-    image(robberShadow,avatarX,avatarY + 20);
+    image(robberShadow,avatarX,avatarY + 10, avatarSize, avatarSize);
 
   }
   else if (keyIsDown(DOWN_ARROW)) {
     avatarVY = avatarSpeed;
-    image(robberShadow,avatarX,avatarY-20);
+    image(robberShadow,avatarX,avatarY-10, avatarSize, avatarSize);
   }
 
   // Move the avatar according to its calculated velocity
@@ -154,9 +162,9 @@ background(sky);
     // Reset the dodge counter
     dodges = 0;
 //red robber in collision
-    image(robberRed, avatarX, avatarY);
+    currentRobber = robberRed;
   }
-
+//end of this makes robber back to original state
   // Check if the avatar has gone off the screen (cheating!)
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
     // If they went off the screen they lose in the same way as above.
@@ -169,7 +177,6 @@ background(sky);
     avatarY = height/2;
     dodges = 0;
 //make avatar turn red upon collision
-    image(robberRed, avatarX, avatarY);
   }
 
   // Check if the enemy has moved all the way across the screen
@@ -188,7 +195,7 @@ background(sky);
 
     avatarSpeed = random(0,5);
     console.log(avatarSpeed);
-    avatarSize = random(0,10);
+    avatarSize = random(1,100);
 
     background(sky);
   }
@@ -207,7 +214,8 @@ background(sky);
 
 
 //change player to the robber
-  image(robber,avatarX,avatarY);
+//make current robber the original
+  image(currentRobber,avatarX,avatarY, avatarSize, avatarSize);
 
 
 
