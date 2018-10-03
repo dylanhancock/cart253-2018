@@ -128,9 +128,9 @@ function setup() {
 function draw() {
 
 
-
+//add wienerDog
   image(wienerDog,100,50,200,100);
-
+//display find me text
   textFont("Helvetica");
   textSize(24);
   noStroke();
@@ -138,7 +138,7 @@ function draw() {
   text("FIND ME!",50,90);
 
   if (gameOver) {
-
+//crazy background
     background(random(255), random(255), random(255));
     //image(targetImage, random(0,windowWidth), random(0,windowHeight), 50, 50);
     // Prepare our typography
@@ -156,7 +156,7 @@ function draw() {
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
 
     //image(targetImage,random(0,windowWidth),random (0,windowHeight), 50,50);
-
+//get the dog to move after being found
     dogX += dogVX;
     dogY += dogVY;
 
@@ -182,7 +182,7 @@ function mousePressed() {
     if (mouseY > targetY - targetImage.height/2 && mouseY < targetY + targetImage.height/2) {
       gameOver = true;
 
-
+//variables to get dog moving
       dogX = targetX;
       dogY = targetY;
 
