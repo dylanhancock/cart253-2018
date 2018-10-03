@@ -26,19 +26,18 @@ var decoyImage7;
 var decoyImage8;
 var decoyImage9;
 var decoyImage10;
-var Colour1 = (0,0,0)
-var Colour2 = (255,255,255)
+var weinerDog;
+var targetImagenew;
 
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
-//decoy changed to 500
-var numDecoys = 10;
+var numDecoys = 100;
 
 // Keep track of whether they've won
 var gameOver = false;
 
-var dogX;
-var dogY;
+var dogX
+var dogY
 
 var dogVX;
 var dogVY;
@@ -46,10 +45,8 @@ var dogVY;
 // preload()
 //
 // Loads the target and decoy images before the program starts
-//added the daschund jpeg aswell as a secod target image
 function preload() {
-  targetImage = loadImage("assets/images/animals-target1.png");
-  targetImage1 = loadImage("assets/images/animals-target.png");
+  targetImage = loadImage("assets/images/animals-target.png");
 
   decoyImage1 = loadImage("assets/images/animals-01.png");
   decoyImage2 = loadImage("assets/images/animals-02.png");
@@ -61,20 +58,17 @@ function preload() {
   decoyImage8 = loadImage("assets/images/animals-08.png");
   decoyImage9 = loadImage("assets/images/animals-09.png");
   decoyImage10 = loadImage("assets/images/animals-10.png");
-  wienerdog = loadImage("assets/images/wienerdog.jpg");
-
+  wienerDog = loadImage ("assets/images/wienerdog.jpg");
+  targetImagenew = loadImage("assets/images/animals-targetnew.png");
 }
 
 // setup()
 //
 // Creates the canvas, sets basic modes, draws correct number
 // of decoys in random positions, then the target
-//made background which changes at random each reload
 function setup() {
   createCanvas(windowWidth,windowHeight);
-  background(random(255), random(255), random(255));
-
-
+  background(random(255),random(255),random(255));
   imageMode(CENTER);
 
   // Use a for loop to draw as many decoys as we need
@@ -88,102 +82,91 @@ function setup() {
     // images, each with a 10% chance of being shown
     // We'll talk more about this nice quality of random soon enough
     if (r < 0.1) {
-      image(decoyImage1,x,y, 50, 50);
+      image(decoyImage1,x,y,50, 50);
     }
     else if (r < 0.2) {
-      image(decoyImage2,x,y, 50,50);
+      image(decoyImage2,x,y,50, 50);
     }
     else if (r < 0.3) {
-      image(decoyImage3,x,y,50,50);
+      image(decoyImage3,x,y,50, 50);
     }
     else if (r < 0.4) {
-      image(decoyImage4,x,y,50,50);
+      image(decoyImage4,x,y,50, 50);
     }
     else if (r < 0.5) {
-      image(decoyImage5,x,y,50,50);
+      image(decoyImage5,x,y,50, 50);
     }
     else if (r < 0.6) {
-      image(decoyImage6,x,y,50,50);
+      image(decoyImage6,x,y,50, 50);
     }
     else if (r < 0.7) {
-      image(decoyImage7,x,y,50,50);
+      image(decoyImage7,x,y,50, 50);
     }
     else if (r < 0.8) {
-      image(decoyImage8,x,y,50,50);
+      image(decoyImage8,x,y,50, 50);
     }
     else if (r < 0.9) {
-      image(decoyImage9,x,y,50,50);
+      image(decoyImage9,x,y,50, 50);
     }
     else if (r < 1.0) {
-      image(decoyImage10,x,y,50,50);
+      image(decoyImage10,x,y,50, 50);
     }
-
-
   }
-
 
   // Once we've displayed all decoys, we choose a location for the target
   targetX = random(0,width);
   targetY = random(0,height);
-
-  while (targetX < 200 && targetY < 100) {
+  // And draw it (this means it will always be on top)
+  while (targetX < 200 && targetY < 100){
     targetX = random(0,width);
     targetY = random(0,height);
   }
 
-  // And draw it (this means it will always be on top)
-  image(targetImage,targetX,targetY, 50,50);
-
-
+  image(targetImage,targetX,targetY, 50, 50);
 }
 
 function draw() {
 
-//added pink rectangle
-  fill('#fae');
-  noStroke();
-  // rect(0,0,200,100);
-//put image over rectangle
-  imageMode(CORNERS);
-image(wienerdog,0,0,200,100);
 
 
-//added text ---- FIND ME
+  image(wienerDog,0,0,200,100);
+
   textFont("Helvetica");
   textSize(24);
   noStroke();
   fill(255);
   text("FIND ME!",50,90);
-//add wiener dog
-  // image(targetImage1,100,50,100,100);
 
   if (gameOver) {
-    // Prepare our typography
-//make background random colours
-//background (random(255), random(255), random(255));
-background(255);
 
+    background(random(255), random(255), random(255));
+    //image(targetImage, random(0,windowWidth), random(0,windowHeight), 50, 50);
+    // Prepare our typography
     textFont("Helvetica");
     textSize(128);
     textAlign(CENTER,CENTER);
     noStroke();
-    fill(random(255),random(255),random(255));
+    fill(random(255));
     // Tell them they won!
     text("YOU WINNED!",width/2,height/2);
-//ellipse and doggie getting bigger
+
     noFill();
-    stroke(random(255),random(255),random(255));
+    stroke(random(255));
     strokeWeight(10);
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
 
-//dog velocity
+    //image(targetImage,random(0,windowWidth),random (0,windowHeight), 50,50);
+
     dogX += dogVX;
     dogY += dogVY;
 
+    image(targetImage,dogX,dogY, 50, 50);
 
-//display dog
-// console.log(targetImage.width);
-    //image(wienerdog,dogX,dogY, 50, 50);
+
+
+
+
+
 
 
   }
@@ -199,15 +182,13 @@ function mousePressed() {
     if (mouseY > targetY - targetImage.height/2 && mouseY < targetY + targetImage.height/2) {
       gameOver = true;
 
+
       dogX = targetX;
       dogY = targetY;
 
       dogVX = 1;
       dogVY = 0;
 
-
     }
-
   }
-
 }
