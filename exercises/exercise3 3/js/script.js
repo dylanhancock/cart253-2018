@@ -129,7 +129,7 @@ function draw() {
 
 
 
-  image(wienerDog,0,0,200,100);
+  image(wienerDog,100,50,200,100);
 
   textFont("Helvetica");
   textSize(24);
