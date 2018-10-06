@@ -136,9 +136,11 @@ function handleInput() {
     playerVY = 0;
   }
 //ADDED SHIFT TO SPRINT
+//ADDED HEALTH DECLINE WITH SPRINT MODE
   if (keyIsDown(UP_ARROW)) {
     if (keyIsDown(16)) {
       playerVY = -10;
+      playerHealth = constrain(playerHealth - 2,0,playerMaxHealth);
     }
   //  playerVY = -playerMaxSpeed;
   }
@@ -146,6 +148,7 @@ function handleInput() {
   if (keyIsDown(DOWN_ARROW)) {
     if (keyIsDown(16)) {
       playerVY = 10;
+      playerHealth = constrain(playerHealth - 2,0,playerMaxHealth);
     }
 
   }
@@ -153,12 +156,14 @@ function handleInput() {
   if (keyIsDown(RIGHT_ARROW)) {
     if (keyIsDown(16)) {
       playerVX = 10;
+      playerHealth = constrain(playerHealth - 2,0,playerMaxHealth);
     }
 }
 
 if (keyIsDown(LEFT_ARROW)) {
   if (keyIsDown(16)) {
     playerVX = -10;
+    playerHealth = constrain(playerHealth - 2,0,playerMaxHealth);
   }
 
 }
