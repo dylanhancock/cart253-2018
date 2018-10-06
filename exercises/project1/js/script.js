@@ -123,16 +123,49 @@ function handleInput() {
   }
 
   // Check for vertical movement
-  if (keyIsDown(UP_ARROW)) {
+
+  if (keyIsDown(UP_ARROW)){
     playerVY = -playerMaxSpeed;
+
   }
   else if (keyIsDown(DOWN_ARROW)) {
     playerVY = playerMaxSpeed;
   }
+
   else {
     playerVY = 0;
   }
+//ADDED SHIFT TO SPRINT
+  if (keyIsDown(UP_ARROW)) {
+    if (keyIsDown(16)) {
+      playerVY = -10;
+    }
+  //  playerVY = -playerMaxSpeed;
+  }
+
+  if (keyIsDown(DOWN_ARROW)) {
+    if (keyIsDown(16)) {
+      playerVY = 10;
+    }
+
+  }
+
+  if (keyIsDown(RIGHT_ARROW)) {
+    if (keyIsDown(16)) {
+      playerVX = 10;
+    }
 }
+
+if (keyIsDown(LEFT_ARROW)) {
+  if (keyIsDown(16)) {
+    playerVX = -10;
+  }
+
+}
+
+}
+
+
 
 // movePlayer()
 //
@@ -222,6 +255,7 @@ function movePrey() {
     preyY = height * noise(tY);
 tX += 0.01;
 tY += 0.01;
+
   //{
 
   // Update prey position based on velocity
