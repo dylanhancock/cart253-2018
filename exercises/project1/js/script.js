@@ -45,10 +45,30 @@ var preyFill = 200;
 var eatHealth = 10;
 // Number of prey eaten during the game
 var preyEaten = 0;
+var cat;
+var catX;
+var catY;
+var catRadius = 25;
+var mouseRadius = 25;
+var miceX = 0;
+var miceY = 250;
+var miceVX = 2;
+var miceVY = 0;
+var catHeight = 50;
+var preyRadius = 25;
+var preyHeight = 25;
 
 // setup()
 //
 // Sets up the basic elements of the game
+
+function preload () {
+
+  cat = loadImage ("assets/images/cat.png")
+  mouse = loadImage ("assets/images/mouse.png")
+}
+
+
 function setup() {
   createCanvas(500,500);
 
@@ -56,7 +76,10 @@ function setup() {
 
   setupPrey();
   setupPlayer();
+
+
 }
+
 
 // setupPrey()
 //
@@ -78,6 +101,7 @@ function setupPlayer() {
   playerX = 4*width/5;
   playerY = height/2;
   playerHealth = playerMaxHealth;
+  catRadius = 25;
 }
 
 // draw()
@@ -104,6 +128,11 @@ function draw() {
   }
   else {
     showGameOver();
+
+    miceX += miceVX
+    miceY +=miceVY
+
+    image(cat,miceX,miceY, 50, 50);
   }
 }
 
@@ -140,7 +169,7 @@ function handleInput() {
   if (keyIsDown(UP_ARROW)) {
     if (keyIsDown(16)) {
       playerVY = -10;
-      playerHealth = constrain(playerHealth - 2,0,playerMaxHealth);
+      playerHealth = constrain(playerHealth - 1,0,playerMaxHealth);
     }
   //  playerVY = -playerMaxSpeed;
   }
@@ -148,7 +177,7 @@ function handleInput() {
   if (keyIsDown(DOWN_ARROW)) {
     if (keyIsDown(16)) {
       playerVY = 10;
-      playerHealth = constrain(playerHealth - 2,0,playerMaxHealth);
+      playerHealth = constrain(playerHealth - 1,0,playerMaxHealth);
     }
 
   }
@@ -156,14 +185,14 @@ function handleInput() {
   if (keyIsDown(RIGHT_ARROW)) {
     if (keyIsDown(16)) {
       playerVX = 10;
-      playerHealth = constrain(playerHealth - 2,0,playerMaxHealth);
+      playerHealth = constrain(playerHealth - 1,0,playerMaxHealth);
     }
 }
 
 if (keyIsDown(LEFT_ARROW)) {
   if (keyIsDown(16)) {
     playerVX = -10;
-    playerHealth = constrain(playerHealth - 2,0,playerMaxHealth);
+    playerHealth = constrain(playerHealth - 1,0,playerMaxHealth);
   }
 
 }
@@ -204,6 +233,8 @@ function movePlayer() {
 function updateHealth() {
   // Reduce player health, constrain to reasonable range
   playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
+  catRadius = constrain(catRadius - 0.1, 20, 50);
+  catHeight = constrain(catHeight -0.1, 20, 50);
   // Check if the player is dead
   if (playerHealth === 0) {
     // If so, the game is over
@@ -218,11 +249,19 @@ function checkEating() {
   // Get distance of player to prey
   var d = dist(playerX,playerY,preyX,preyY);
   // Check if it's an overlap
-  if (d < playerRadius + preyRadius) {
+  if (d < catRadius + mouseRadius) {
     // Increase the player health
+    //player is growing with consumption
     playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
+    catRadius = catRadius + 1;
+    catHeight = catHeight + 1;
+
     // Reduce the prey health
+    //prey is smaller with consumption
     preyHealth = constrain(preyHealth - eatHealth,0,preyMaxHealth);
+    preyRadius = constrain(preyRadius - 0.5, 20, 50);
+    preyHeight = constrain (preyHeight - 0.5, 20, 50);
+    //tX = tX +10;
 
     // Check if the prey died
     if (preyHealth === 0) {
@@ -287,16 +326,19 @@ tY += 0.01;
 //
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
-  fill(preyFill,preyHealth);
-  ellipse(preyX,preyY,preyRadius*2);
+  //tint(preyFill,preyHealth);
+  image(mouse,preyX, preyY, preyRadius,preyHeight);
+  //ellipse(preyX,preyY,preyRadius*2);
 }
 
 // drawPlayer()
 //
 // Draw the player as an ellipse with alpha based on health
 function drawPlayer() {
-  fill(playerFill,playerHealth);
-  ellipse(playerX,playerY,playerRadius*2);
+  tint(preyFill,playerHealth);
+  image(cat,playerX, playerY, catRadius,catHeight);
+
+//  ellipse(playerX,playerY,playerRadius*2);
 }
 
 // showGameOver()
@@ -305,7 +347,7 @@ function drawPlayer() {
 function showGameOver() {
   textSize(32);
   textAlign(CENTER,CENTER);
-  fill(0);
+  fill(200);
   var gameOverText = "GAME OVER\n";
   gameOverText += "You ate " + preyEaten + " prey\n";
   gameOverText += "before you died."
