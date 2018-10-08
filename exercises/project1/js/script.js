@@ -68,7 +68,7 @@ function preload () {
   mouse = loadImage ("assets/images/mouse.png")
   meow = new Audio("assets/sounds/meow.mp3")
   music = new Audio ("assets/sounds/music.mp3")
-  alley = loadImage ("assets/images/graff.jpg")
+  alley = loadImage ("assets/images/trash.jpg")
   font = loadFont ("assets/fonts/TSBlockBold.ttf")
 
 }
@@ -135,6 +135,12 @@ function draw() {
     drawPlayer();
 
     music.play();
+
+textFont(font);
+    textSize(18);
+    fill(60, 420, 69);
+    text("MICE ATE " + preyEaten, 10, 50);
+
 
   }
   else {
@@ -368,7 +374,7 @@ textFont(font);
   textAlign(CENTER,CENTER);
   fill(200);
   var gameOverText = "GAME OVER\n";
-  gameOverText += "YOU ATE " + preyEaten + " prey\n";
+  gameOverText += "YOU ATE " + preyEaten + " mice\n";
   gameOverText += "BEFORE YOU DIED"
   text(gameOverText,width/2,height/2);
 }
