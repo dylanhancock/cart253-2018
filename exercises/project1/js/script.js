@@ -69,6 +69,7 @@ function preload () {
   meow = new Audio("assets/sounds/meow.mp3")
   music = new Audio ("assets/sounds/music.mp3")
   alley = loadImage ("assets/images/graff.jpg")
+  font = loadFont ("assets/fonts/TSBlockBold.ttf")
 
 }
 
@@ -362,12 +363,12 @@ function drawPlayer() {
 // Display text about the game being over!
 function showGameOver() {
 
-
+textFont(font);
   textSize(32);
   textAlign(CENTER,CENTER);
   fill(200);
   var gameOverText = "GAME OVER\n";
-  gameOverText += "You ate " + preyEaten + " prey\n";
-  gameOverText += "before you died."
+  gameOverText += "YOU ATE " + preyEaten + " prey\n";
+  gameOverText += "BEFORE YOU DIED"
   text(gameOverText,width/2,height/2);
 }
