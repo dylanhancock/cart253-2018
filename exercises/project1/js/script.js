@@ -48,15 +48,15 @@ var preyEaten = 0;
 var cat;
 var catX;
 var catY;
-var catRadius = 25;
+var catRadius = 50;
 var mouseRadius = 25;
 var miceX = 0;
 var miceY = 250;
 var miceVX = 2;
 var miceVY = 0;
-var catHeight = 50;
-var preyRadius = 25;
-var preyHeight = 25;
+var catHeight = 125;
+var preyRadius = 50;
+var preyHeight = 50;
 
 // setup()
 //
@@ -66,6 +66,10 @@ function preload () {
 
   cat = loadImage ("assets/images/cat.png")
   mouse = loadImage ("assets/images/mouse.png")
+  meow = new Audio("assets/sounds/meow.mp3")
+  music = new Audio ("assets/sounds/music.mp3")
+  alley = loadImage ("assets/images/graff.jpg")
+
 }
 
 
@@ -92,6 +96,8 @@ function setupPrey() {
   preyHealth = preyMaxHealth;
   tX = 0;
   tY = 0;
+  preyHeight = 50;
+  preyRadius = 50;
 }
 
 // setupPlayer()
@@ -101,7 +107,8 @@ function setupPlayer() {
   playerX = 4*width/5;
   playerY = height/2;
   playerHealth = playerMaxHealth;
-  catRadius = 25;
+  catRadius = 50;
+  catHeight = 125;
 }
 
 // draw()
@@ -112,7 +119,7 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-  background(100,100,200);
+  background(alley);
 
   if (!gameOver) {
     handleInput();
@@ -125,14 +132,23 @@ function draw() {
 
     drawPrey();
     drawPlayer();
+
+    music.play();
+
   }
   else {
     showGameOver();
 
-    miceX += miceVX
-    miceY +=miceVY
+music.pause();
 
-    image(cat,miceX,miceY, 50, 50);
+    meow.play();
+    noLoop();
+
+
+  //  miceX += miceVX
+  //  miceY +=miceVY
+
+  //  image(cat,miceX,miceY, 50, 50);
   }
 }
 
@@ -233,8 +249,8 @@ function movePlayer() {
 function updateHealth() {
   // Reduce player health, constrain to reasonable range
   playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
-  catRadius = constrain(catRadius - 0.1, 20, 50);
-  catHeight = constrain(catHeight -0.1, 20, 50);
+  catRadius = constrain(catRadius - 0.1, 25, 50);
+  catHeight = constrain(catHeight - 0.2, 62.5, 125);
   // Check if the player is dead
   if (playerHealth === 0) {
     // If so, the game is over
@@ -259,8 +275,8 @@ function checkEating() {
     // Reduce the prey health
     //prey is smaller with consumption
     preyHealth = constrain(preyHealth - eatHealth,0,preyMaxHealth);
-    preyRadius = constrain(preyRadius - 0.5, 20, 50);
-    preyHeight = constrain (preyHeight - 0.5, 20, 50);
+    preyRadius = constrain(preyRadius - 0.2, 10, 50);
+    preyHeight = constrain (preyHeight - 0.2, 10, 50);
     //tX = tX +10;
 
     // Check if the prey died
@@ -345,6 +361,8 @@ function drawPlayer() {
 //
 // Display text about the game being over!
 function showGameOver() {
+
+
   textSize(32);
   textAlign(CENTER,CENTER);
   fill(200);
