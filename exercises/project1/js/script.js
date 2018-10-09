@@ -57,6 +57,7 @@ var miceVY = 0;
 var catHeight = 125;
 var preyRadius = 50;
 var preyHeight = 50;
+var t = 0;
 
 // setup()
 //
@@ -136,6 +137,11 @@ function draw() {
 
     music.play();
 
+push();
+    rect(0,0,playerHealth, 10);
+    fill(0,255,0);
+    pop();
+
 textFont(font);
     textSize(18);
     fill(60, 420, 69);
@@ -145,12 +151,20 @@ textFont(font);
   }
   else {
     showGameOver();
+ //if ( gameOver === true) {
+  // gameOver === false;
+   //meow.play();
+ //}
+      //gameovervariable = true
+    //  playmusic here
+    //}
+    music.pause();
 
-music.pause();
 
-    meow.play();
-    noLoop();
-
+//  push();
+  //meow.play();
+  //noLoop();
+//pop ();
 
   //  miceX += miceVX
   //  miceY +=miceVY
@@ -262,6 +276,8 @@ function updateHealth() {
   if (playerHealth === 0) {
     // If so, the game is over
     gameOver = true;
+
+    meow.play ();
   }
 }
 
@@ -272,7 +288,7 @@ function checkEating() {
   // Get distance of player to prey
   var d = dist(playerX,playerY,preyX,preyY);
   // Check if it's an overlap
-  if (d < catRadius + mouseRadius) {
+  if (d < catRadius + preyRadius) {
     // Increase the player health
     //player is growing with consumption
     playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
@@ -368,11 +384,15 @@ function drawPlayer() {
 //
 // Display text about the game being over!
 function showGameOver() {
+  var r = 255 * noise(t+10);
+   var g = 255 * noise(t+20);
+   var b = 255 * noise(t+45);
 
+   t = t + 0.01;
 textFont(font);
   textSize(32);
   textAlign(CENTER,CENTER);
-  fill(200);
+  fill(r,g,b);
   var gameOverText = "GAME OVER\n";
   gameOverText += "YOU ATE " + preyEaten + " mice\n";
   gameOverText += "BEFORE YOU DIED"
