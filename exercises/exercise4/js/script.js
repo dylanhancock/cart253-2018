@@ -44,7 +44,7 @@ var leftPaddle = {
 
 // RIGHT PADDLE
 
-// Basic definition of a left paddle object with its key properties of
+// Basic definition of a left paddle objects with its key properties of
 // position, size, velocity, and speed
 var rightPaddle = {
   x: 0,
@@ -61,6 +61,8 @@ var rightPaddle = {
 // A variable to hold the beep sound we will play on bouncing
 var beepSFX;
 
+var leftPaddlepoints;
+var rightPaddlepoints;
 // preload()
 //
 // Loads the beep audio for the sound of bouncing
@@ -82,6 +84,9 @@ function setup() {
 
   setupPaddles();
   setupBall();
+
+  rightPaddlepoints = 0;
+  leftPaddlepoints = 0;
 }
 
 // setupPaddles()
@@ -92,9 +97,11 @@ function setupPaddles() {
   leftPaddle.x = paddleInset;
   leftPaddle.y = height/2;
 
+
   // Initialise the right paddle
   rightPaddle.x = width - paddleInset;
   rightPaddle.y = height/2;
+
 }
 
 // setupBall()
@@ -139,6 +146,11 @@ function draw() {
   displayPaddle(leftPaddle);
   displayPaddle(rightPaddle);
   displayBall();
+////NEW/////
+//added paddle text
+  text(rightPaddlepoints, 10, 20)
+  text(leftPaddlepoints, width - 15, 20)
+  ////////****END NEW//////
 }
 
 
@@ -253,15 +265,25 @@ function handleBallOffScreen() {
   var ballRight = ball.x + ball.size/2;
 
   // Check for ball going off the sides
-  if (ballRight < 0 || ballLeft > width) {
+  /////NEW//////////
+
+  if (ballRight < 0 ) {
     // If it went off either side, reset it to the centre
     ball.x = width/2;
     ball.y = height/2;
+  rightPaddlepoints += 1; }
+
+    else if ( ballLeft > width) {
+      leftPaddlepoints += 1;
+      ball.x = width/2;
+      ball.y = height/2;
+
     // NOTE that we don't change its velocity here so it just
     // carries on moving with the same velocity after its
     // position is reset.
     // This is where we would count points etc!
   }
+  /////END NEW/////////////
 }
 
 // displayBall()
