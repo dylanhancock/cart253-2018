@@ -5,8 +5,11 @@
 // just the ability to play the game with the keyboard.
 
 // Game colors
-var bgColor = 0;
-var fgColor = 255;
+
+//var bgColor = ((random(0,255),random(0,255),random(0,255));
+var bgColor = 33;
+var fgColor = (69);
+var canScore = true
 
 // BALL
 
@@ -77,7 +80,7 @@ function preload() {
 // and velocities.
 function setup() {
   // Create canvas and set drawing modes
-  createCanvas(640,480);
+  createCanvas(640, 480);
   rectMode(CENTER);
   noStroke();
   fill(fgColor);
@@ -95,12 +98,12 @@ function setup() {
 function setupPaddles() {
   // Initialise the left paddle
   leftPaddle.x = paddleInset;
-  leftPaddle.y = height/2;
+  leftPaddle.y = height / 2;
 
 
   // Initialise the right paddle
   rightPaddle.x = width - paddleInset;
-  rightPaddle.y = height/2;
+  rightPaddle.y = height / 2;
 
 }
 
@@ -108,8 +111,8 @@ function setupPaddles() {
 //
 // Sets the position and velocity of the ball
 function setupBall() {
-  ball.x = width/2;
-  ball.y = height/2;
+  ball.x = width / 2;
+  ball.y = height / 2;
   ball.vx = ball.speed;
   ball.vy = ball.speed;
 }
@@ -146,11 +149,11 @@ function draw() {
   displayPaddle(leftPaddle);
   displayPaddle(rightPaddle);
   displayBall();
-////NEW/////
-//added paddle text
+  ////NEW/////
+  //added paddle text
   text(rightPaddlepoints, 10, 20)
   text(leftPaddlepoints, width - 15, 20)
-  ////////****END NEW//////
+  ////////****END/////
 }
 
 
@@ -182,8 +185,7 @@ function handleInput(paddle) {
   else if (keyIsDown(paddle.downKeyCode)) {
     // Move down
     paddle.vy = paddle.speed;
-  }
-  else {
+  } else {
     // Otherwise stop moving
     paddle.vy = 0;
   }
@@ -208,10 +210,10 @@ function updatePosition(object) {
 function handleBallWallCollision() {
 
   // Calculate edges of ball for clearer if statement below
-  var ballTop = ball.y - ball.size/2;
-  var ballBottom = ball.y + ball.size/2;
-  var ballLeft = ball.x - ball.size/2;
-  var ballRight = ball.x + ball.size/2;
+  var ballTop = ball.y - ball.size / 2;
+  var ballBottom = ball.y + ball.size / 2;
+  var ballLeft = ball.x - ball.size / 2;
+  var ballRight = ball.x + ball.size / 2;
 
   // Check for ball colliding with top and bottom
   if (ballTop < 0 || ballBottom > height) {
@@ -230,16 +232,16 @@ function handleBallWallCollision() {
 function handleBallPaddleCollision(paddle) {
 
   // Calculate edges of ball for clearer if statements below
-  var ballTop = ball.y - ball.size/2;
-  var ballBottom = ball.y + ball.size/2;
-  var ballLeft = ball.x - ball.size/2;
-  var ballRight = ball.x + ball.size/2;
+  var ballTop = ball.y - ball.size / 2;
+  var ballBottom = ball.y + ball.size / 2;
+  var ballLeft = ball.x - ball.size / 2;
+  var ballRight = ball.x + ball.size / 2;
 
   // Calculate edges of paddle for clearer if statements below
-  var paddleTop = paddle.y - paddle.h/2;
-  var paddleBottom = paddle.y + paddle.h/2;
-  var paddleLeft = paddle.x - paddle.w/2;
-  var paddleRight = paddle.x + paddle.w/2;
+  var paddleTop = paddle.y - paddle.h / 2;
+  var paddleBottom = paddle.y + paddle.h / 2;
+  var paddleLeft = paddle.x - paddle.w / 2;
+  var paddleRight = paddle.x + paddle.w / 2;
 
   // First check it is in the vertical range of the paddle
   if (ballBottom > paddleTop && ballTop < paddleBottom) {
@@ -261,41 +263,68 @@ function handleBallPaddleCollision(paddle) {
 function handleBallOffScreen() {
 
   // Calculate edges of ball for clearer if statement below
-  var ballLeft = ball.x - ball.size/2;
-  var ballRight = ball.x + ball.size/2;
+  var ballLeft = ball.x - ball.size / 2;
+  var ballRight = ball.x + ball.size / 2;
 
   // Check for ball going off the sides
   /////NEW//////////
 
-  if (ballRight < 0 ) {
+  if (ballRight < 0) {
+    //canScore = false;
     // If it went off either side, reset it to the centre
-    ball.x = width/2;
-    ball.y = height/2;
-  rightPaddlepoints += 1; }
+    ball.x = width / 2;
+    ball.y = height / 2;
+    rightPaddle.h += 10;
+    leftPaddlepoints += 1;
+    ball.vx = random(-1,-10)
+    reset();
 
-    else if ( ballLeft > width) {
-      leftPaddlepoints += 1;
-      ball.x = width/2;
-      ball.y = height/2;
+
+  }
+
+///NEW//////
+//Added if statement to ensure the ball's velocity reverses at a random number and the paddle points increase//
+
+
+  else if (ballLeft > width) {
+    ball.x = width / 2;
+    ball.y = height / 2;
+    leftPaddle.h += 10
+    rightPaddlepoints += 1;
+    ball.vx = random(1,10);
+    reset();
+
+
+
 
     // NOTE that we don't change its velocity here so it just
     // carries on moving with the same velocity after its
     // position is reset.
     // This is where we would count points etc!
   }
+  console.log(ball.speed)
   /////END NEW/////////////
 }
+////NEW/////
+//added reset function///
+function reset() {
+  ball.vx = -ball.vx
 
+  //abs(ball.vx) * random(5,10);
+  //ball.speed = -ball.speed;
+
+}
+////END OF RESET FUNCTION///
 // displayBall()
 //
 // Draws ball on screen based on its properties
 function displayBall() {
-  rect(ball.x,ball.y,ball.size,ball.size);
+  rect(ball.x, ball.y, ball.size, ball.size);
 }
 
 // displayPaddle(paddle)
 //
 // Draws the specified paddle on screen based on its properties
 function displayPaddle(paddle) {
-  rect(paddle.x,paddle.y,paddle.w,paddle.h);
+  rect(paddle.x, paddle.y, paddle.w, paddle.h);
 }
