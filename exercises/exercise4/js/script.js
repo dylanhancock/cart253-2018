@@ -4,12 +4,6 @@
 // A primitive implementation of Pong with no scoring system
 // just the ability to play the game with the keyboard.
 
-// Game colors
-
-//var bgColor = ((random(0,255),random(0,255),random(0,255));
-var bgColor = 33;
-var fgColor = (69);
-var canScore = true
 
 // BALL
 
@@ -83,7 +77,7 @@ function setup() {
   createCanvas(640, 480);
   rectMode(CENTER);
   noStroke();
-  fill(fgColor);
+  fill(0,255,0);
 
   setupPaddles();
   setupBall();
@@ -117,14 +111,23 @@ function setupBall() {
   ball.vy = ball.speed;
 }
 
-// draw()
-//
+var t = 0;
+
 // Calls the appropriate functions to run the game
 function draw() {
   // Fill the background
-  background(bgColor);
+///NEW//////
+//Noise based background colour changes/////
+  var r = 255 * noise(t+10);
+  var g = 255 * noise(t+15);
+  var b = 255 * noise(t+20);
+  t += 0.01;
 
+background(r,g,b);
+
+///END NEW*****////
   // Handle input
+
   // Notice how we're using the SAME FUNCTION to handle the input
   // for the two paddles!
   handleInput(leftPaddle);
@@ -151,8 +154,9 @@ function draw() {
   displayBall();
   ////NEW/////
   //added paddle text
-  text(rightPaddlepoints, 10, 20)
-  text(leftPaddlepoints, width - 15, 20)
+  textSize(30);
+  text(rightPaddlepoints, 20, 40);
+  text(leftPaddlepoints, width - 30, 40)
   ////////****END/////
 }
 
@@ -281,7 +285,7 @@ function handleBallOffScreen() {
 
 
   }
-
+/////END NEW///////
 ///NEW//////
 //Added if statement to ensure the ball's velocity reverses at a random number and the paddle points increase//
 
@@ -308,13 +312,13 @@ function handleBallOffScreen() {
 ////NEW/////
 //added reset function///
 function reset() {
-  ball.vx = -ball.vx
+  ball.vx = -ball.vx;
 
   //abs(ball.vx) * random(5,10);
   //ball.speed = -ball.speed;
 
 }
-////END OF RESET FUNCTION///
+////END NEW///
 // displayBall()
 //
 // Draws ball on screen based on its properties
