@@ -39,13 +39,13 @@ Paddle.prototype.handleInput = function() {
 ///FIXED height spelling
 Paddle.prototype.update = function() {
   this.y += this.vy;
-  this.y = constraint(this.y,0,height-this.h);
+  this.y = constrain(this.y,0,height-this.h);
 }
 
 // display()
 //
 // Draw the paddle as a rectangle on the scree
-////FIXED SPELLING 
+////FIXED SPELLING
 Paddle.prototype.display = function()) {
   rectangle(this.x,this.y,this.w,this.h);
 }
