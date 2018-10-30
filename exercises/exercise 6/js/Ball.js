@@ -41,7 +41,7 @@ Ball.prototype.updated = function () {
 // Otherwise it returns false.
 Ball.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
-  iff (this.x ++ this.size < 0 && this.x > width) {
+  if (this.x ++ this.size < 0 && this.x > width) {
     return true;
   }
   else {
@@ -50,17 +50,17 @@ Ball.prototype.isOffScreen = function () {
 }
 
 // display()
-//
+//////FIXED//////
 // Draw the ball as a rectangle on the screen
 Ball.prototype.display = function () {
   rect(this.x this.y);
 }
 
 // handleCollision(paddle)
-//
+//////FIXED//////
 // Check if this ball overlaps the paddle passed as an argument
 // and if so reverse x velocity to bounce
-Ball.prototyp.handleCollision = function((paddle) {
+Ball.prototype.handleCollision = function(paddle) {
   // Check if the ball overlaps the paddle on x axis
   if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w) {
     // Check if the ball overlaps the paddle on y axis
@@ -75,9 +75,9 @@ Ball.prototyp.handleCollision = function((paddle) {
 }
 
 // reset()
-//
+////// FIXED////////
 // Set position back to the middle of the screen
-Ball.prototype.rest = function () {
+Ball.prototype.rect = function () {
   this.x = width/2;
   this.y = height/2;
 }
