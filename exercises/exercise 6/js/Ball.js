@@ -21,9 +21,9 @@ function Ball(x,y,vx,vy,size,speed) {
 // Moves according to velocity, constrains y to be on screen,
 // checks for bouncing on upper or lower edgs, checks for going
 // off left or right side.
-Ball.prototype.updated = function () {
+Ball.prototype.update = function () {
   // Update position with velocity
-  this.x = this.vx;
+  this.x += this.vx;
   this.y += this.vy;
 
   // Constrain y position to be on screen
@@ -39,9 +39,9 @@ Ball.prototype.updated = function () {
 //
 // Checks if the ball has moved off the screen and, if so, returns true.
 // Otherwise it returns false.
-Ball.prototype.isOffScreen = function () {
+Ball.prototype.isOffscreen = function () {
   // Check for going off screen and reset if so
-  if (this.x ++ this.size < 0 && this.x > width) {
+  if (this.x + this.size < 0 && this.x > width) {
     return true;
   }
   else {
@@ -53,7 +53,7 @@ Ball.prototype.isOffScreen = function () {
 //////FIXED//////
 // Draw the ball as a rectangle on the screen
 Ball.prototype.display = function () {
-  rect(this.x this.y);
+  rect(this.x,this.y);
 }
 
 // handleCollision(paddle)

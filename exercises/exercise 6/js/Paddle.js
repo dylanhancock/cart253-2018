@@ -3,7 +3,7 @@
 // A class that defines how a paddle behaves, including the ability
 // to specify the input keys to move it up and down
 
-Paddle constructor
+///Paddle constructor
 ///FIXED commented out text
 ///Sets the properties with the provided arguments or defaults
 ////FIXED paddle spelling///
@@ -14,7 +14,7 @@ function Paddle(x,y,w,h,speed,downKey,upKey) {
   this.yv = 0;
   this.w = w;
   this.h = h;
-  this.speed = speeed;
+  this.speed = speed;
   this.downKey = downKey;
   this.upKey = upKey;
 }
@@ -25,10 +25,10 @@ function Paddle(x,y,w,h,speed,downKey,upKey) {
 // appropriately
 ///FIXED SPELLING/////
 Paddle.prototype.handleInput = function() {
-  if (keyDown(upKey)) {
+  if (keyIsDown(this.upKey)) {
     this.vy = -this.speed;
   }
-  else if (keyDown(downKey)) {
+  else if (keyIsDown(this.downKey)) {
     this.vy = -this.speed;
   }
 }
@@ -46,6 +46,6 @@ Paddle.prototype.update = function() {
 //
 // Draw the paddle as a rectangle on the scree
 ////FIXED SPELLING
-Paddle.prototype.display = function()) {
+Paddle.prototype.display = function() {
   rectangle(this.x,this.y,this.w,this.h);
 }
