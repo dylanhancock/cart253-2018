@@ -42,7 +42,7 @@ Ball.prototype.handleBallOffScreen = function() {
   var ballRight = this.x + this.size / 2;
 
   // Check for ball going off the sides
-
+///
 
   if (ballRight < 0) {
     //canScore = false;
