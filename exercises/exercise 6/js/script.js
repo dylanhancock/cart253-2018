@@ -32,7 +32,7 @@ function setup() {
   setupPaddles();
 }
   function setupBall() {
-  ball = new Ball(width/2,height/2,50,50,10,50);
+  ball = new Ball(width/2,height/2,2,2,10,20);
   }
   // Create the right paddle with UP and DOWN as controls
   function setupPaddles () {
@@ -56,15 +56,20 @@ function draw() {
   ball.update();
   leftPaddle.update();
   rightPaddle.update();
+////FIXED! spelling on function////
+if (ball.isOffscreen() === true){
+  ball.reset();
 
-  if (ball.isOffscreen())
-    reset();
-
-
+}
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
 
-  ball.display();
+  displayBall();
+
+  function displayBall() {
+    rect (ball.x, ball.y, ball.size, ball.size)
+  }
+
   leftPaddle.display();
   rightPaddle.display();
 }

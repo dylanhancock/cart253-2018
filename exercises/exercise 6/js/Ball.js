@@ -10,6 +10,7 @@
 function Ball(x,y,vx,vy,size,speed) {
   this.x = x;
   this.y = y;
+  // this.size = size;
   this.vx = vx;
   this.vy = vy;
   this.size = size;
@@ -39,22 +40,36 @@ Ball.prototype.update = function () {
 //
 // Checks if the ball has moved off the screen and, if so, returns true.
 // Otherwise it returns false.
+////FIXED SORT OF
 Ball.prototype.isOffscreen = function () {
   // Check for going off screen and reset if so
-  if (this.x + this.size < 0 && this.x > width) {
-    return true;
-  }
-  else {
-    return false;
+  var ballLeft = this.x - this.size / 2;
+  var ballRight = this.x + this.size / 2;
+
+  // Check for ball going off the sides
+  /////NEW//////////
+
+  if (ballRight < 0) {
+    //canScore = false;
+    // If it went off either side, reset it to the centre
+    this.x = width / 2;
+    this.y = height / 2;
+
+  } else if (ballLeft > width) {
+    this.x = width / 2;
+    this.y = height / 2;
+
   }
 }
+
+
 
 // display()
 //////FIXED//////
 // Draw the ball as a rectangle on the screen
-Ball.prototype.display = function () {
-  rect(this.x,this.y);
-}
+// Ball.prototype.displayBall = function () {
+//   rect(this.x,this.y, this.size, this.size);
+// }
 
 // handleCollision(paddle)
 //////FIXED//////
@@ -77,7 +92,7 @@ Ball.prototype.handleCollision = function(paddle) {
 // reset()
 ////// FIXED////////
 // Set position back to the middle of the screen
-Ball.prototype.rect = function () {
+Ball.prototype.reset = function () {
   this.x = width/2;
   this.y = height/2;
 }
