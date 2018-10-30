@@ -27,13 +27,13 @@ Ball.prototype.update = function () {
   this.x += this.vx;
   this.y += this.vy;
 
-  // Constrain y position to be on screen
-  // this.y = constrain(this.y,0,height-this.size);
+
+this.y = constrain(this.y,0,height-this.size);
   //
-  // // Check for touching upper or lower edge and reverse velocity if so
-  // if (this.y = 0 || this.y + this.size === height) {
-  //   this.vy = -this.vy;
-  //}
+  // Check for touching upper or lower edge and reverse velocity if so
+if (this.y === 0 || this.y + this.size === height) {
+  this.vy = -this.vy;
+  }
 }
 
 // isOffScreen()
@@ -55,23 +55,38 @@ Ball.prototype.isOffscreen = function () {
     // If it went off either side, reset it to the centre
     this.x = width / 2;
     this.y = height / 2;
-    this.vx = random (-1,-10);
-    this.vx = -this.vx;
+    // this.vx = random (-1,-10);
+    // this.vx = -this.vx;
   }
   else if (ballLeft > width) {
     this.x = width / 2;
     this.y = height / 2;
-    this.vx = random(1, 10);
-    this.vx = -this.vx;
+    // this.vx = random(1, 10);
+    // this.vx = -this.vx;
 
   }
+
+
 }
-
-
+//
+// Ball.prototype.isOffscreenY = function () {
+//
+//     if (ball.y > height) {
+//             this.vy -= this.vy;
+// }
+//
+// else if (ball.y < 0) {
+//
+//   this.vy -= this.vy;
+// }
+//
+// }
 
 // display()
 //////FIXED//////
 // Draw the ball as a rectangle on the screen
+
+
 // Ball.prototype.displayBall = function () {
 //   rect(this.x,this.y, this.size, this.size);
 // }
@@ -89,7 +104,7 @@ Ball.prototype.handleCollision = function(paddle) {
       this.x -= this.vx;
       this.y -= this.vy;
       // Reverse x velocity to bounce
-      this.vx = this.vx;
+      this.vx = -this.vx;
     }
   }
 }

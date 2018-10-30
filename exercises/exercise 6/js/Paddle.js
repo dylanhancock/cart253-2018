@@ -32,6 +32,10 @@ Paddle.prototype.handleInput = function() {
   else if (keyIsDown(this.downKeyCode)) {
     this.vy = this.speed;
   }
+  else {
+    this.vy = 0;
+  }
+
 }
 
 // update()
@@ -40,6 +44,7 @@ Paddle.prototype.handleInput = function() {
 ///FIXED height spelling
 Paddle.prototype.update = function() {
   this.y += this.vy;
+  this.y = constrain(this.y,0,height-this.h);
 
 }
 

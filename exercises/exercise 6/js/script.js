@@ -25,18 +25,16 @@ function setup() {
   createCanvas(640,480);
   noStroke();
   // Create a ball
-  rectMode(CENTER);
-  noStroke();
   fill(0,255,0);
   setupBall();
   setupPaddles();
 }
   function setupBall() {
-  ball = new Ball(width/2,280,2,1,10,20);
+  ball = new Ball(width/2,height/2,2,1,10,20);
   }
   // Create the right paddle with UP and DOWN as controls
   function setupPaddles () {
-  rightPaddle = new Paddle(width-paddleInset,height/2,10,60,10,40,38);
+  rightPaddle = new Paddle(width-20,height/2,10,60,10,40,38);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
   /////ADDED BRACKET FIXED
