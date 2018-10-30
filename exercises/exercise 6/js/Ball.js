@@ -28,12 +28,12 @@ Ball.prototype.update = function () {
   this.y += this.vy;
 
   // Constrain y position to be on screen
-  this.y = constrain(this.y,0,height-this.size);
-
-  // Check for touching upper or lower edge and reverse velocity if so
-  if (this.y = 0 || this.y + this.size === height) {
-    this.vy = -this.vy;
-  }
+  // this.y = constrain(this.y,0,height-this.size);
+  //
+  // // Check for touching upper or lower edge and reverse velocity if so
+  // if (this.y = 0 || this.y + this.size === height) {
+  //   this.vy = -this.vy;
+  //}
 }
 
 // isOffScreen()
@@ -41,6 +41,7 @@ Ball.prototype.update = function () {
 // Checks if the ball has moved off the screen and, if so, returns true.
 // Otherwise it returns false.
 ////FIXED SORT OF
+////FIXED OFF SCREEN FUNCTION
 Ball.prototype.isOffscreen = function () {
   // Check for going off screen and reset if so
   var ballLeft = this.x - this.size / 2;
@@ -54,10 +55,14 @@ Ball.prototype.isOffscreen = function () {
     // If it went off either side, reset it to the centre
     this.x = width / 2;
     this.y = height / 2;
-
-  } else if (ballLeft > width) {
+    this.vx = random (-1,-10);
+    this.vx = -this.vx;
+  }
+  else if (ballLeft > width) {
     this.x = width / 2;
     this.y = height / 2;
+    this.vx = random(1, 10);
+    this.vx = -this.vx;
 
   }
 }

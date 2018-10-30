@@ -15,7 +15,7 @@
 var ball;
 var leftPaddle;
 var rightPaddle;
-
+var paddleInset = 10;
 // setup()
 //
 // Creates the ball and paddles
@@ -32,15 +32,15 @@ function setup() {
   setupPaddles();
 }
   function setupBall() {
-  ball = new Ball(width/2,height/2,2,2,10,20);
+  ball = new Ball(width/2,280,2,1,10,20);
   }
   // Create the right paddle with UP and DOWN as controls
   function setupPaddles () {
-  rightPaddle = new Paddle(width-10,height/2,10,600,10,UP_ARROW,DOWN_ARROW);
+  rightPaddle = new Paddle(width-paddleInset,height/2,10,60,10,40,38);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
   /////ADDED BRACKET FIXED
-  leftPaddle = new Paddle(0,height/2,10,60,10,83,87);
+  leftPaddle = new Paddle(paddleInset,height/2,10,60,10,83,87);
 
 }
 // draw()
@@ -56,11 +56,7 @@ function draw() {
   ball.update();
   leftPaddle.update();
   rightPaddle.update();
-////FIXED! spelling on function////
-if (ball.isOffscreen() === true){
-  ball.reset();
-
-}
+  ball.isOffscreen();
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
 
@@ -72,4 +68,5 @@ if (ball.isOffscreen() === true){
 
   leftPaddle.display();
   rightPaddle.display();
+
 }

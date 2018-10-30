@@ -7,16 +7,16 @@
 ///FIXED commented out text
 ///Sets the properties with the provided arguments or defaults
 ////FIXED paddle spelling///
-function Paddle(x,y,w,h,speed,downKey,upKey) {
+function Paddle(x,y,w,h,speed,downKeyCode,upKeyCode) {
   this.x = x;
   this.y = y;
-  this.xv = 0;
-  this.yv = 0;
   this.w = w;
   this.h = h;
+  this.vx = 0;
+  this.vy = 0;
   this.speed = speed;
-  this.downKey = downKey;
-  this.upKey = upKey;
+  this.downKeyCode = downKeyCode;
+  this.upKeyCode = upKeyCode;
 }
 
 // handleInput()
@@ -25,12 +25,12 @@ function Paddle(x,y,w,h,speed,downKey,upKey) {
 // appropriately
 ///FIXED SPELLING/////
 Paddle.prototype.handleInput = function() {
-  if (keyIsDown(this.upKey)) {
+  if (keyIsDown(this.upKeyCode)) {
     this.vy = -this.speed;
   }
   ///FIXED FUNCTION
-  else if (keyIsDown(this.downKey)) {
-    this.vy = -this.speed;
+  else if (keyIsDown(this.downKeyCode)) {
+    this.vy = this.speed;
   }
 }
 
@@ -40,7 +40,7 @@ Paddle.prototype.handleInput = function() {
 ///FIXED height spelling
 Paddle.prototype.update = function() {
   this.y += this.vy;
-  this.y = constrain(this.y,0,height-this.h);
+
 }
 
 // display()
