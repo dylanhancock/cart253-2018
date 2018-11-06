@@ -176,36 +176,9 @@ function draw() {
     text(leftPaddlepoints, width - 40, 40);
 
 
-
-    if (rightPaddlepoints > 3 || leftPaddlepoints > 3) {
-
-      noLoop();
-      background(0, 255, 20);
-      text("game over my friend", 20, 30);
-      text("Score" + rightPaddlepoints, 50, 50);
-      text("Score" + leftPaddlepoints, 100, 100);
-
-
-      //   document.body.addEventListener("click", function(){
-      //   document.getElementById("textStart").style.display = "none";
-      //   start = true;
-      //   startGame();
-      //   draw();
-      //
-      // });
-
-    }
-
-    if (rightPaddle.h < 10 || leftPaddle.h < 10) {
-
-      noLoop();
-      background(0, 255, 20);
-      text("game over my friend", 20, 30);
-      text("Score" + rightPaddlepoints, 50, 50);
-      text("Score" + leftPaddlepoints, 100, 100);
-      start = false;
-
-    }
+    scoreMax();
+    heightMin();
+  
   }
 
   else {
@@ -214,6 +187,12 @@ function draw() {
   }
 
 }
+
+
+
+
+
+
 
 function mouseClicked () {
 
@@ -226,9 +205,37 @@ function mouseClicked () {
     leftPaddle.x = 0;
     rightPaddle.y = height/2;
     leftPaddle.y = height/2;
+    leftPaddle.h = 60;
+    rightPaddle.h = 60;
 
 }
 
+
+function scoreMax () {
+      if (rightPaddlepoints > 3 || leftPaddlepoints > 3) {
+
+      noLoop();
+      background(0, 255, 20);
+      text("game over my friend", 20, 30);
+      text("Score" + rightPaddlepoints, 50, 50);
+      text("Score" + leftPaddlepoints, 100, 100);
+    }
+
+  }
+
+function heightMin () {
+
+    if (rightPaddle.h < 10 || leftPaddle.h < 10) {
+
+    noLoop();
+    background(0, 255, 20);
+    text("game over my friend", 20, 30);
+    text("Score" + rightPaddlepoints, 50, 50);
+    text("Score" + leftPaddlepoints, 100, 100);
+    start = false;
+
+  }
+}
 // noLoop ();
 // background (0,255,20);
 // text ("game over my friend", 20, 30);
