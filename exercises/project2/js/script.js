@@ -23,6 +23,7 @@ var start = false;
 var fonty;
 var rainbow;
 var cool;
+var rainbowball;
 var balls = [rainbow, cool]
 var ballremix = balls[Math.floor(Math.random() * balls.length)]
 
@@ -100,7 +101,7 @@ function setup() {
 
   ball3 = new Ball(width / 4, height / 2, 5, 5, 10, 2);
 
-  ball4 = new Ball(width / 2.25, height / 2, 5, 5, 100, 2);
+  rainbowball = new Rainbow(width / 2.25, height / 2, 5, 5, 100, 2);
 
   rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 10, DOWN_ARROW, UP_ARROW);
   // Create the left paddle with W and S as controls
@@ -145,29 +146,28 @@ function draw() {
     ball.update();
     ball2.update2();
     ball3.update3();
-    ball4.update4();
+    rainbowball.update();
     leftPaddle.update();
     rightPaddle.update();
 
     ball.isOffScreen();
     ball2.isOffScreen();
 
-    // if (ball.isOffScreen()) {
-    //   ball.reset();
-    // }
+
 
     ball.handleCollision(leftPaddle);
     ball.handleCollision(rightPaddle);
     ball2.handleCollision3(leftPaddle);
     ball3.handleCollision2(rightPaddle);
-    ball4.handleCollision4(ball);
+
+    rainbowball.handleCollision(ball);
 
 
 
     ball.display();
     ball2.display2();
     ball3.display2();
-    ball4.display3();
+    rainbowball.display();
     leftPaddle.display();
     rightPaddle.display();
 

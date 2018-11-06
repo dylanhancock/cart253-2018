@@ -4,7 +4,7 @@
 // and bottom edges of the canvas, going off the left and right sides,
 // and bouncing off paddles.
 
-// Ball constructor
+// Rainbow constructor
 //
 // Sets the properties with the provided arguments
 function Rainbow(x, y, vx, vy, size, speed) {
@@ -38,9 +38,9 @@ Rainbow.prototype.update = function() {
 }
 
 Rainbow.prototype.handleCollision = function(ball) {
-  // Check if the ball overlaps the paddle on x axis
+  // Check if the ball overlaps the Rainbow on x axis
   if (this.x + this.size > ball.x && this.x < ball.x + ball.size) {
-    // Check if the ball overlaps the paddle on y axis
+    // Check if the ball overlaps the Rainbow on y axis
     if (this.y + this.size > ball.y && this.y < ball.y + ball.size) {
       // If so, move ball back to previous position (by subtracting current velocity)
       ball.x -= ball.vx;
@@ -53,6 +53,12 @@ Rainbow.prototype.handleCollision = function(ball) {
     }
   }
 }
-// reset()
-//
-// Set position back to the middle of the screen
+
+Rainbow.prototype.display = function() {
+
+
+
+  image(rainbow, this.x, this.y, 100, 100);
+  tint(255, 127);
+
+}
