@@ -37,7 +37,7 @@ Rainbow.prototype.update = function() {
   }
 
 }
-
+//when ball hits rainbow ball it transforms into an array of other balls
 Rainbow.prototype.handleCollision = function(ball) {
   // Check if the ball overlaps the Rainbow on x axis
   if (this.x + this.size > ball.x && this.x < ball.x + ball.size) {
@@ -57,7 +57,7 @@ Rainbow.prototype.handleCollision = function(ball) {
     }
   }
 }
-
+//display the rainbow
 Rainbow.prototype.display = function() {
 
 

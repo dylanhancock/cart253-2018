@@ -48,60 +48,6 @@ function preload() {
   blackball = loadImage("assets/images/blackball.png");
 }
 
-//var x = document.createElement("BUTTON");
-
-//x.addEventListener("click", startGame());
-
-//var x = document.createElement("BUTTON");
-
-//if(){
-
-//}
-/////THE GOOD SETUP
-// function setup() {
-//   document.body.addEventListener("click", function(){
-//       document.getElementById("textStart").style.display = "none";
-//       start = true;
-//       startGame();
-//
-//   });
-// }
-//////END GOOD SETUP
-//document.body.addEventListener('click', startGame(), true);
-
-//if(document.body.onmousedown){
-//  start = true;
-//}
-
-
-
-////GOOD START GAME WITH CLICK
-// function startGame() {
-//   if(start){
-//     createCanvas(640,480);
-//     // Create a ball
-//     ball = new Ball(width/2,height/2,5,5,10,5);
-//     // Create the right paddle with UP and DOWN as controls
-//     ball2 = new Ball (width/4,height/2,5,5,10,2);
-//
-//     ball3 = new Ball (width/4, height/2, 5, 5, 10, 2);
-//
-//     ball4 = new Ball (width/2.25, height/2, 5, 5, 1, 2);
-//
-//     rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW);
-//     // Create the left paddle with W and S as controls
-//     // Keycodes 83 and 87 are W and S respectively
-//     leftPaddle = new Paddle(0,height/2,10,60,10,83,87);
-//
-//     rightPaddlepoints = 0;
-//     leftPaddlepoints = 0;
-//
-//     tx = random(0,1000);
-//     ty = random(0,1000);
-//
-//     textFont (fonty);
-//   }
-// }
 
 function setup() {
 
@@ -123,7 +69,7 @@ function setup() {
 
   rightPaddlepoints = 0;
   leftPaddlepoints = 0;
-
+//sets the tx determining background colour to random numbers for noise function
   tx = random(0, 1000);
   ty = random(0, 1000);
 
@@ -142,7 +88,7 @@ var gameover = false;
 
 
 function draw() {
-
+//if screen is not pressed, display the click to start screen
   if (start) {
 
 
@@ -152,22 +98,22 @@ function draw() {
     t += 0.01;
 
     background(r, g, b);
-
+//paddles input
     leftPaddle.handleInput();
     rightPaddle.handleInput();
-
+//update functions
     ball.update();
     evilball.update();
     evilball2.update2();
     rainbowball.update();
     leftPaddle.update();
     rightPaddle.update();
-
+//off screen function to reset ball
     ball.isOffScreen();
-    // ball2.isOffScreen();
 
 
 
+//colllision functions
     ball.handleCollision(leftPaddle);
     ball.handleCollision(rightPaddle);
     evilball2.handleCollision(rightPaddle);
@@ -175,24 +121,25 @@ function draw() {
     rainbowball.handleCollision(ball);
 
 
-
+//display functions
     ball.display();
     evilball.display();
     evilball2.display();
-    // ball3.display2();
-    rainbowball.display(); // NOTE: lags fps & CPU
+    rainbowball.display();
     leftPaddle.display();
     rightPaddle.display();
-
+//paddle score text
     textSize(40);
     text(rightPaddlepoints, 20, 40);
     text(leftPaddlepoints, width - 40, 40);
-
+//game over based on paddle height and score
     gameOver();
-    // scoreMax();
-    // heightMin();
 
-  } else {
+
+  }
+
+  //added click to start screen
+  else {
     background(0, 255, 0);
     textSize(40);
     text("PRESS ANYWHERE TO BEGIN", 10, height / 2 - 100);
@@ -202,7 +149,7 @@ function draw() {
   }
 
 }
-
+//mouse clicked function triggering the start of the game aswell as resetting the components
 function mouseClicked() {
 
   start = true;
@@ -219,7 +166,7 @@ function mouseClicked() {
 
 }
 
-
+//game over function based on paddle points
 function gameOver() {
   if (rightPaddlepoints > 1 || leftPaddlepoints > 1) {
 
@@ -234,6 +181,7 @@ function gameOver() {
     fill (255,0,0);
     text ("CLICK TO RESTART", 100, 300);
   }
+  //game over based on paddle height
   else if (rightPaddle.h < 40 || leftPaddle.h < 40) {
 
     noLoop();
