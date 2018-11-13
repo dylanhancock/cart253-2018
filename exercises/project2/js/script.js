@@ -168,7 +168,7 @@ function mouseClicked() {
 
 //game over function based on paddle points
 function gameOver() {
-  if (rightPaddlepoints > 1 || leftPaddlepoints > 1) {
+  if (rightPaddlepoints > 10 || leftPaddlepoints > 10) {
 
     noLoop();
     background(0, 255, 20);
@@ -186,7 +186,6 @@ function gameOver() {
 
     noLoop();
     background(0, 255, 20);
-    textAlign (CENTER, CENTER);
     fill (0);
     text("GAME OVER MY FRIEND", 70, 50);
     fill (0,0,255);
