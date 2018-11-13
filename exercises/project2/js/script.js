@@ -8,15 +8,20 @@
 // the left hand paddle.
 //
 // Written with JavaScript OOP.
-
+var canscore = true;
 // Variable to contain the objects representing our ball and paddles
 var ball;
 var leftPaddle;
 var rightPaddle;
-var ball2;
-var ball3;
+var topPaddle;
+var bottomPaddle;
+var evilball;
+var evilball2;
 var start = false;
-
+var angle = 0.01;
+var speed = 0.03;
+var pong;
+var orangeball;
 // setup()
 //
 // Creates the ball and paddles
@@ -24,17 +29,24 @@ var fonty;
 var rainbow;
 var cool;
 var rainbowball;
-var balls = [rainbow, cool]
-var ballremix = balls[Math.floor(Math.random() * balls.length)]
+var balls;
+var paddle2;
+var openingImage;
+var whiteball;
+var blackball;
 
 function preload() {
 
   fonty = loadFont("assets/fonts/PERSONAL.TTF");
   rainbow = loadImage("assets/images/Ord.png");
   cool = loadImage("assets/images/wheel.png");
+  gif = loadImage("assets/images/rainboworb.gif");
+  pong = loadImage("assets/images/pong.png");
+  paddle2 = loadImage("assets/images/pongpaddle.png");
+  openingImage = loadImage("assets/images/swag.png");
+  whiteball = loadImage("assets/images/whiteball.png");
+  blackball = loadImage("assets/images/blackball.png");
 }
-
-
 
 //var x = document.createElement("BUTTON");
 
@@ -95,13 +107,14 @@ function setup() {
 
   createCanvas(640, 480);
   // Create a ball
-  ball = new Ball(width / 2, height / 2, 5, 5, 10, 5);
+  balls = [whiteball, rainbow, pong, whiteball, blackball];
+  ball = new Ball(width / 2, height / 2, 5, 5, 10, 5, balls, orangeball);
   // Create the right paddle with UP and DOWN as controls
-  ball2 = new Ball(width / 4, height / 2, 5, 5, 10, 2);
+  evilball = new Evilball(width / 4, height / 2, 5, 5, 10, 2, 255);
 
-  ball3 = new Ball(width / 4, height / 2, 5, 5, 10, 2);
+  evilball2 = new Evilball(width / 4, height / 2, 5, 5, 10, 2, 0);
 
-  rainbowball = new Rainbow(width / 2.25, height / 2, 5, 5, 100, 2);
+  rainbowball = new Rainbow(width / 2, height / 2, 5, 5, 100, 2);
 
   rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 10, DOWN_ARROW, UP_ARROW);
   // Create the left paddle with W and S as controls
@@ -131,7 +144,7 @@ var gameover = false;
 function draw() {
 
   if (start) {
-    // if(start){
+
 
     var r = 255 * noise(t + 10);
     var g = 255 * noise(t + 15);
@@ -144,30 +157,30 @@ function draw() {
     rightPaddle.handleInput();
 
     ball.update();
-    ball2.update2();
-    ball3.update3();
+    evilball.update();
+    evilball2.update2();
     rainbowball.update();
     leftPaddle.update();
     rightPaddle.update();
 
     ball.isOffScreen();
-    ball2.isOffScreen();
+    // ball2.isOffScreen();
 
 
 
     ball.handleCollision(leftPaddle);
     ball.handleCollision(rightPaddle);
-    ball2.handleCollision3(leftPaddle);
-    ball3.handleCollision2(rightPaddle);
-
+    evilball2.handleCollision(rightPaddle);
+    evilball.handleCollision2(leftPaddle);
     rainbowball.handleCollision(ball);
 
 
 
     ball.display();
-    ball2.display2();
-    ball3.display2();
-    rainbowball.display();
+    evilball.display();
+    evilball2.display();
+    // ball3.display2();
+    rainbowball.display(); // NOTE: lags fps & CPU
     leftPaddle.display();
     rightPaddle.display();
 
@@ -175,129 +188,65 @@ function draw() {
     text(rightPaddlepoints, 20, 40);
     text(leftPaddlepoints, width - 40, 40);
 
+    gameOver();
+    // scoreMax();
+    // heightMin();
 
-    scoreMax();
-    heightMin();
-  
-  }
+  } else {
+    background(0, 255, 0);
+    textSize(40);
+    text("PRESS ANYWHERE TO BEGIN", 10, height / 2 - 100);
+    image(openingImage, 70, -200, 1000, 1000);
 
-  else {
-    background (0, 255, 0);
-    text ("whats up world!", width / 2, height / 2);
+
   }
 
 }
 
-
-
-
-
-
-
-function mouseClicked () {
+function mouseClicked() {
 
   start = true;
   loop();
 
-    leftPaddlepoints = 0;
-    rightPaddlepoints = 0;
-    rightPaddle.x = width-10;
-    leftPaddle.x = 0;
-    rightPaddle.y = height/2;
-    leftPaddle.y = height/2;
-    leftPaddle.h = 60;
-    rightPaddle.h = 60;
+  leftPaddlepoints = 0;
+  rightPaddlepoints = 0;
+  rightPaddle.x = width - 10;
+  leftPaddle.x = 0;
+  rightPaddle.y = height / 2;
+  leftPaddle.y = height / 2;
+  leftPaddle.h = 60;
+  rightPaddle.h = 60;
 
 }
 
 
-function scoreMax () {
-      if (rightPaddlepoints > 3 || leftPaddlepoints > 3) {
-
-      noLoop();
-      background(0, 255, 20);
-      text("game over my friend", 20, 30);
-      text("Score" + rightPaddlepoints, 50, 50);
-      text("Score" + leftPaddlepoints, 100, 100);
-    }
-
-  }
-
-function heightMin () {
-
-    if (rightPaddle.h < 10 || leftPaddle.h < 10) {
+function gameOver() {
+  if (rightPaddlepoints > 1 || leftPaddlepoints > 1) {
 
     noLoop();
     background(0, 255, 20);
-    text("game over my friend", 20, 30);
-    text("Score" + rightPaddlepoints, 50, 50);
-    text("Score" + leftPaddlepoints, 100, 100);
-    start = false;
+    fill(0);
+    text("GAMEOVER MY FRIEND", 70, 50);
+    fill (0,0,255);
+    text("Score" + rightPaddlepoints, 70, 150);
+    fill (0,0,255);
+    text("Score" + leftPaddlepoints, 400, 150);
+    fill (255,0,0);
+    text ("CLICK TO RESTART", 100, 300);
+  }
+  else if (rightPaddle.h < 40 || leftPaddle.h < 40) {
+
+    noLoop();
+    background(0, 255, 20);
+    textAlign (CENTER, CENTER);
+    fill (0);
+    text("GAME OVER MY FRIEND", 70, 50);
+    fill (0,0,255);
+    text("Score" + rightPaddlepoints, 70, 150);
+    fill (0,0,255);
+    text("Score" + leftPaddlepoints, 400, 150);
+    fill (255,0,0);
+    text ("CLICK TO RESTART", 100, 300);
 
   }
 }
-// noLoop ();
-// background (0,255,20);
-// text ("game over my friend", 20, 30);
-// text ("Score" + rightPaddlepoints, 50, 50);
-// text ("Score" + leftPaddlepoints, 100,100);
-//
-//
-//
-// if (mouseIsPressed) {
-//
-//
-//   ball.reset();
-//   leftPaddlepoints = 0;
-//   rightPaddlepoints = 0;
-//   rightPaddle.x = width-10;
-//   leftPaddle.x = 0;
-//   rightPaddle.y = height/2;
-//   leftPaddle.y = height/2;
-//   startGame();
-//   draw();
-//   start = true;
-// }
-
-
-// clearEverything();
-//
-//
-// document.getElementById("restartGame").style.display = "block";
-//
-// document.getElementById("restartGame").addEventListener("click", function(){
-//     //document.getElementById("textStart").style.display = "none";
-//     //alert("111");
-//     start = true;
-//     startGame();
-//     draw();
-//
-// });
-//
-// function clearEverything(){
-//
-//
-//   ball.reset();
-//   leftPaddlepoints = 0;
-//   rightPaddlepoints = 0;
-//   rightPaddle.x = width-10;
-//   leftPaddle.x = 0;
-//   rightPaddle.y = height/2;
-//   leftPaddle.y = height/2;
-//   startGame();
-//   draw();
-//   start = true;
-//   //clear everything here
-
-
-
-// else if {
-//
-//   text: ("whats up world!", width/2, height/2)
-//   background: (0,255,0)
-// }
-
-
-// function mouseClicked () {
-//   started === true;
-// }

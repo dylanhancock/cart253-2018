@@ -7,14 +7,16 @@
 // Ball constructor
 //
 // Sets the properties with the provided arguments
-function Ball(x, y, vx, vy, size, speed) {
+function Ball(x, y, vx, vy, size, speed, imageArray, defaultimage) {
   this.x = x;
   this.y = y;
   this.vx = vx;
   this.vy = vy;
   this.size = size;
   this.speed = speed;
-  this.color = color(255,255,255);
+  this.color = color(255, 255, 255);
+  this.imageArray = imageArray;
+  this.image = defaultimage;
 }
 
 // update()
@@ -103,32 +105,39 @@ Ball.prototype.isOffScreen = function() {
 //
 // Draw the ball as a rectangle on the screen
 Ball.prototype.display = function() {
-  fill(this.color);
-  rect(this.x, this.y, this.size, this.size);
+  // fill(this.color);
+  // rect(this.x, this.y, this.size, this.size);
+  image(this.image, this.x, this.y);
 }
 
-Ball.prototype.display2 = function() {
-  fill(0);
-  ellipse(this.x, this.y, this.size, this.size);
+
+Ball.prototype.change = function() {
+  console.log('changed');
+  this.image = this.imageArray[floor(random(0, this.imageArray.length))];
 }
 
-Ball.prototype.display3 = function() {
-
-
-
-  image(rainbow, this.x, this.y, 100, 100);
-  tint(255, 127);
-
-}
-
-Ball.prototype.display4 = function() {
-
-
-
-  image(balls, this.x, this.y, 100, 100);
-  tint(255, 127);
-
-}
+// Ball.prototype.display2 = function() {
+//   fill(0);
+//   ellipse(this.x, this.y, this.size, this.size);
+// }
+//
+// Ball.prototype.display3 = function() {
+//
+//
+//
+//   image(rainbow, this.x, this.y, 100, 100);
+//   tint(255, 127);
+//
+// }
+//
+// Ball.prototype.display4 = function() {
+//
+//
+//
+//   image(balls, this.x, this.y, 100, 100);
+//   tint(255, 127);
+//
+// }
 
 // handleCollision(paddle)
 //

@@ -8,8 +8,8 @@
 //
 // Sets the properties with the provided arguments
 function Rainbow(x, y, vx, vy, size, speed) {
-  this.x = x;
-  this.y = y;
+  this.x = width/2;
+  this.y = height/2;
   this.vx = vx;
   this.vy = vy;
   this.size = size;
@@ -35,6 +35,7 @@ Rainbow.prototype.update = function() {
   if (this.y === 0 || this.y + 100 === height) {
     this.vy = -this.vy;
   }
+
 }
 
 Rainbow.prototype.handleCollision = function(ball) {
@@ -47,9 +48,12 @@ Rainbow.prototype.handleCollision = function(ball) {
       ball.y -= ball.vy;
       // Reverse x velocity to bounce
       ball.vx = -ball.vx;
-      ball.color = color(random(0, 255), random(0, 255), random(0, 255));
 
-
+      if (canscore) {
+        canscore = false;
+        ball.change();
+        setTimeout( function () { canscore = true; }, 1500);
+      }
     }
   }
 }
@@ -57,8 +61,7 @@ Rainbow.prototype.handleCollision = function(ball) {
 Rainbow.prototype.display = function() {
 
 
-
-  image(rainbow, this.x, this.y, 100, 100);
+  image(rainbow, this.x, this.y,50, 50);
   tint(255, 127);
 
 }
