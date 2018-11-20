@@ -102,6 +102,9 @@ function draw() {
   // A pink background
   background(bg);
 
+  fill(0,255,0);
+  rect(width/2, 10, constrain(opacity,0,255), 10);
+  text("fill percentage" + map(opacity,0,255,0,100), width/2, 50);
 
   if (mouseIsPressed) {
     // mousePressed();
