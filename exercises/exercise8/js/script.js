@@ -28,34 +28,70 @@ var enemyVX = 5;
 
 // How many dodges the player has made
 var dodges = 0;
-var opacity = 127;
+var opacity = 0;
 var Graff;
 
+var graffArray = [];
+
+var graffImages = [];
+
+
+
+var cops;
+var bg;
+var lou;
+
+var currentImage;
+var lambo;
+var currentCarimage;
+
+var carImages = [];
 // setup()
 //
 // Make the canvas, position the avatar and anemy
 
 function preload() {
 
-  kilz = loadImage ("assets/images/kilz.png");
-  graff = loadImage ("assets/images/Graffiti-PNG-Photo.png")
+  kilz = loadImage("assets/images/kilz.png");
+  graff = loadImage("assets/images/ofsy.png");
+  bg = loadImage("assets/images/bg.jpg");
+  cops = loadImage("assets/images/cops3.png");
+  bart = loadImage("assets/images/simpzin.png");
+  lou = loadImage("assets/images/lou.png");
+  lambo = loadImage("assets/images/lambo.png");
+  rari = loadImage("assets/images/rari2.png");
+  porsche = loadImage("assets/images/porsche.png")
+
+  graffImages = [graff,lou];
+  carImages = [cops,lambo,rari,porsche];
 
 
 }
+
 function setup() {
   // Create our playing area
-  createCanvas(500,500);
+  createCanvas(852, 480);
+
 
   // Put the avatar in the centre
-  avatarX = width/2;
-  avatarY = height/2;
+  avatarX = width / 2;
+  avatarY = height / 2;
 
   // Put the enemy to the left at a random y coordinate within the canvas
   enemyX = 0;
-  enemyY = random(height,height-height/3);
+  enemyY = random(height, height - height / 3);
 
   // No stroke so it looks cleaner
   noStroke();
+
+
+  var randomIndex = floor(random(0,graffImages.length));
+
+  currentImage = graffImages[randomIndex];
+
+  var randomIndex2 = floor(random(0,carImages.length));
+
+  currentCarimage = carImages[randomIndex2];
 }
 
 // draw()
@@ -64,18 +100,48 @@ function setup() {
 // game over situations.
 function draw() {
   // A pink background
-  background(0,0,0);
+  background(bg);
 
-if (mouseIsPressed) {
-  mousePressed();
-  mouseIsPressed = true;
-  // image(graff,mouseX,mouseY);
 
-  // Create the prey object
-    var newGraff = new Graff(mouseX, mouseY, opacity);
+  if (mouseIsPressed) {
+    // mousePressed();
+
+    opacity++;
+    push();
+    tint(255, opacity);
+    image(currentImage, mouseX, mouseY);
+    pop();
+
+      // for (var opacity = 127; opacity < 255; opacity += 10) {
+      //   console.log(opacity);
+      // }
+
+      // while (opacity < 255) {
+
+      // }
+
+    // mouseIsPressed = true;
+    // image(graff,mouseX,mouseY);
+
+    // Create the prey object
+    if (opacity === 255) {
+        var newGraff = new Graff(mouseX, mouseY, opacity,currentImage);
+        graffArray.push(newGraff);
+        console.log("addedgraff");
+        var randomIndex = floor(random(0,graffImages.length));
+
+        currentImage = graffImages[randomIndex];
+    }
     // Add the prey object to the prey array
 
-}
+  }
+  else {
+    opacity = 0;
+  }
+
+  for (var i = 0; i < graffArray.length ; i ++) {
+    graffArray[i].display();
+  }
 
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
@@ -88,8 +154,7 @@ if (mouseIsPressed) {
   // Left and right
   if (keyIsDown(LEFT_ARROW)) {
     avatarVX = -avatarSpeed;
-  }
-  else if (keyIsDown(RIGHT_ARROW)) {
+  } else if (keyIsDown(RIGHT_ARROW)) {
     avatarVX = avatarSpeed;
   }
 
@@ -97,8 +162,7 @@ if (mouseIsPressed) {
   // horizontally at the same time)
   if (keyIsDown(UP_ARROW)) {
     avatarVY = -avatarSpeed;
-  }
-  else if (keyIsDown(DOWN_ARROW)) {
+  } else if (keyIsDown(DOWN_ARROW)) {
     avatarVY = avatarSpeed;
   }
 
@@ -114,17 +178,22 @@ if (mouseIsPressed) {
   // Check if the enemy and avatar overlap - if they do the player loses
   // We do this by checking if the distance between the centre of the enemy
   // and the centre of the avatar is less that their combined radii
-  if (dist(enemyX,enemyY,avatarX,avatarY) < enemySize/2 + avatarSize/2) {
+  if (dist(enemyX, enemyY, avatarX, avatarY) < enemySize / 2 + avatarSize / 2) {
     // Tell the player they lost
     console.log("YOU LOSE!");
     // Reset the enemy's position
     enemyX = 0;
-    enemyY = random(height, height-height/3);
+    enemyY = random(height, height - height / 3);
     // Reset the avatar's position
-    avatarX = width/2;
-    avatarY = height/2;
+    avatarX = width / 2;
+    avatarY = height / 2;
     // Reset the dodge counter
     dodges = 0;
+
+    var randomIndex2 = floor(random(0,carImages.length));
+
+    currentCarimage = carImages[randomIndex2];
+
   }
 
   // Check if the avatar has gone off the screen (cheating!)
@@ -132,9 +201,9 @@ if (mouseIsPressed) {
     // If they went off the screen they lose in the same way as above.
     console.log("YOU LOSE!");
     enemyX = 0;
-    enemyY = random(height,height-height/3);
-    avatarX = width/2;
-    avatarY = height/2;
+    enemyY = random(height, height - height / 3);
+    avatarX = width / 2;
+    avatarY = height / 2;
     dodges = 0;
   }
 
@@ -146,39 +215,36 @@ if (mouseIsPressed) {
     console.log(dodges + " DODGES!");
     // Reset the enemy's position to the left at a random height
     enemyX = 0;
-    enemyY = random(height, height-height/3);
+    enemyY = random(height, height - height / 3);
+
+    var randomIndex2 = floor(random(0,carImages.length));
+
+    currentCarimage = carImages[randomIndex2];
   }
 
 
-   for (var opacity = 127; opacity<255;opacity += 10) {
-console.log(opacity);
-   }
-while (opacity < 255) {
-  tint(255, opacity);
-  image (graff, mouseX, mouseY);
-  opacity ++;
-}
 
 
-function mousePressed() {
+  // function mousePressed() {
+  //
+  //   tint(255, 255);
+  //   image(graff, mouseX, mouseY);
+  // }
 
-  tint(255, 255);
-  image (graff, mouseX, mouseY);
- }
   // Display the number of successful dodges in the console
   console.log(dodges);
 
   // The player is black
-  fill(255,255,255);
+  fill(255, 255, 255);
   // Draw the player as a circle
-  ellipse(avatarX,avatarY,avatarSize,avatarSize);
+  image(bart,avatarX, avatarY);
 
   // The enemy is red
-  fill(255,0,0);
+  fill(255, 0, 0);
   // Draw the enemy as a circle
-  ellipse(enemyX,enemyY,enemySize,enemySize);
+  image(currentCarimage,enemyX, enemyY);
 
-  image (kilz, mouseX, mouseY);
+  image(kilz, mouseX, mouseY);
 
 
 }
