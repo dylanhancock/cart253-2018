@@ -1,22 +1,60 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
 
-    <!-- CSS stylesheet(s) -->
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+<a href="game.html">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 400 400" width="400" height="400" version="1.0">      <defs>
+      <filter id="blur" x="-200%" y="-200%" width="400%" height="400%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="25" />
+      </filter>
 
-    <!-- Library script(s) -->
-    <script src="js/libraries/p5.min.js"></script>
+    <clipPath id="clipPath-share">
+      <text x="200" y="200" style="font-size: 50px; " text-anchor="middle"  font-family="Verdana"  >
+      CLICK TO BEGIN
+      </text>
+    </clipPath>
+  </defs>
 
-    <!-- My script(s) -->
-    <script src="js/script.js"></script>
-    <script src="js/Graff.js"></script>
-  </head>
+  <g style="clip-path: url(#clipPath-share);">
+    <text x="200" y="200" style="font-size: 50px; " text-anchor="middle"  font-family="Verdana"  fill="red">
+      CLICK TO BEGIN
+    </text>
+  </g>
 
-  <body>
-    <!-- HTML would go here if needed. -->
-  </body>
+  <g transform="translate(0,0)">
+    <g transform="rotate(0, 200, 200)">
+      <rect x="0" y="0"
+        width="400" height="400" fill="white">
+          <animate dur="0.01s" begin="spray.end" attributeName="fill-opacity" values="1; 0" fill="freeze"/>
+         </rect>
+        <path d="M100, 125 l205 0 l-195 5 l200 13 l-205 10 l200 10 l-210 10 l215 14 l-205 10 l205 10 l-200 10 l205 9 l-200 10 l205 9 " fill="none" stroke="red" stroke-width="30" filter="url(#blur)" stroke-dasharray="0, 10000" >
+          <animate id="spray"
+                   begin="0.5s"
+                   dur="2s"  attributeName="stroke-dasharray" values="0, 10000; 5000, 10000" fill="freeze"/>
+      </path>
+      <g>
+        <text x="200" y="200" style="font-size: 50px; " text-anchor="middle"  font-family="Verdana"  fill="white" fill-opacity="0">
+CLICK TO BEGIN
+          <animate dur="0.01s" begin="spray.end" attributeName="fill-opacity" values="0; 1" fill="freeze"/>
+        </text>
 
-</html>
+      </g>
+      <animateTransform attributeName="transform"
+       attributeType="XML"
+       type="rotate"
+       from="0 200 200"
+       to="1080 200 200"
+       dur="3s"
+       begin="spray.end"/>
+    </g>
+      <animateTransform attributeName="transform"
+        attributeType="XML"
+        type="translate"
+        values="0, 0; 0, -800"
+        dur="3s"
+         begin="spray.end"
+         fill="freeze"
+      />
+    </g>
+<h1>A CART 253 PRODUCTION</h1>
+</a>
+
+</svg>
